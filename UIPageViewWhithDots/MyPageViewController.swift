@@ -10,7 +10,7 @@ import UIKit
 
 class MyPageViewController: UIPageViewController {
     
-    weak var myDelegate: MyPageViewController?
+    weak var myDelegate: MyPageViewDelegate?
     
     var orderedViewControllers: [UIViewController] = {
         return []
@@ -30,6 +30,8 @@ class MyPageViewController: UIPageViewController {
         
         self.dataSource = self
         self.delegate = self
+        
+        myDelegate?.myPageViewController(myPageViewController: self, didUpdatePageCount: orderedViewControllers.count)
         
         
     }
@@ -110,15 +112,18 @@ extension MyPageViewController: UIPageViewControllerDelegate {
         
         if let firstVC = viewControllers?.first,
             let index = orderedViewControllers.firstIndex(of: firstVC) {
+            myDelegate?.myPageViewController(myPageViewController: self, didUpdatePageIndex: index)
         }
-        ///
+    
     }
     
 }
 
 protocol MyPageViewDelegate: class { //протокол может наследоваться только  классом
 
+    func myPageViewController(myPageViewController: MyPageViewController, didUpdatePageCount count: Int)
     
+    func myPageViewController(myPageViewController: MyPageViewController, didUpdatePageIndex index: Int)
     
 }
 

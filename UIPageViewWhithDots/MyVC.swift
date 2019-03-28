@@ -19,12 +19,20 @@ class MyVC: UIViewController {
 
     }
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let myPageVC = segue.destination as! MyPageViewController
-//        myPageVC.myDelegate = self
-        
+        myPageVC.myDelegate = self
     }
+}
 
+
+extension MyVC: MyPageViewDelegate {
+    func myPageViewController(myPageViewController: MyPageViewController, didUpdatePageCount count: Int) {
+        dots.numberOfPages = count
+    }
+    
+    func myPageViewController(myPageViewController: MyPageViewController, didUpdatePageIndex index: Int) {
+        dots.currentPage = index
+    }
 }
